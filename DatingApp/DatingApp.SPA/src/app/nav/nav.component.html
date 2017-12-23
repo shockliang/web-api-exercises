@@ -23,8 +23,8 @@
                   class="form-control" required name="username" [(ngModel)]="model.username">
         </div>
         <div class="form-group">
-          <input type="password" #passowrd="ngModel" placeholder="Password" 
-                  class="form-control" required name="passowrd" [(ngModel)]="model.passowrd">
+          <input type="password" #password="ngModel" placeholder="Password" 
+                  class="form-control" required name="passowrd" [(ngModel)]="model.password">
         </div>
         <button type="submit" [disabled]="!loginForm.valid" class="btn btn-success">Sign in</button>
       </form>
