@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +21,9 @@ import { NavComponent } from './nav/nav.component';
     HttpModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
