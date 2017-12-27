@@ -11,12 +11,12 @@ export class AppComponent implements OnInit {
   title = 'app';
   jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     const token = localStorage.getItem('token');
 
-    if(token) {
+    if (token) {
       this.authService.decodedToken = this.jwtHelper.decodeToken(token);
     }
   }

@@ -10,6 +10,10 @@ import { Component, OnInit } from '@angular/core';
 export class NavComponent implements OnInit {
   model: any = {}
 
+  get username(): string {
+    return this.authService.decodedToken.unique_name;
+  }
+
   constructor(private authService: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
