@@ -38,7 +38,6 @@ namespace DatingApp.API
                 x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddTransient<Seed>();
-            services.AddMvc();
             services.AddCors();
             services.AddScoped<IAuthRepository, AuthRespository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
@@ -53,6 +52,10 @@ namespace DatingApp.API
                         ValidateAudience = false
                     };
                 });
+            services.AddMvc().AddJsonOptions(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
