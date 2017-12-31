@@ -14,8 +14,8 @@ namespace DatingApp.API.Data
 
         public void SeedUsers()
         {
-            // context.Users.RemoveRange(context.Users);
-            // context.SaveChanges();
+            context.Users.RemoveRange(context.Users);
+            context.SaveChanges();
 
             // seed users
             var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
