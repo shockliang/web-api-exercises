@@ -1,3 +1,4 @@
+import { AuthHttp } from 'angular2-jwt';
 import { Headers, RequestOptions, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from './../models/User';
@@ -12,21 +13,13 @@ import "rxjs/add/observable/throw";
 export class UserService {
   baseUrl = environment.apiUrl;
 
-  constructor(private http: Http) { }
+  constructor(private authHttp: AuthHttp) { }
 
   getUsers(): Observable<User[]> {
-    return this.http.get(this.baseUrl + 'users', this.jwt())
+    return this.authHttp
+      .get(this.baseUrl + 'users')
       .map(response => <User[]>response.json())
       .catch(this.handleError);
-  }
-
-  private jwt() {
-    let token = localStorage.getItem('token');
-    if (token) {
-      let headers = new Headers({ 'Authorization': 'Bearer ' + token });
-      headers.append('Content-type', 'application/json');
-      return new RequestOptions({ headers: headers });
-    }
   }
 
   private handleError(error: any) {

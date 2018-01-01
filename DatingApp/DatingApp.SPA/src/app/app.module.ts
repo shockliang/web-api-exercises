@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -38,7 +39,8 @@ import { MemberCardComponent } from './members/member-card/member-card.component
     HttpModule,
     FormsModule,
     BsDropdownModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AuthModule
   ],
   providers: [
     AuthService,
