@@ -24,6 +24,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { TabsModule } from 'ngx-bootstrap/tabs/tabs.module';
 import { MemberDetailResolver } from './resolvers/member-detail.resolver';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { MemberDetailResolver } from './resolvers/member-detail.resolver';
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     AuthModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    NgxGalleryModule
   ],
   providers: [
     AuthService,
