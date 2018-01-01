@@ -1,3 +1,4 @@
+import { MemberListResolver } from './resolvers/member-list.resolver';
 import { AuthModule } from './auth/auth.module';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
@@ -22,6 +23,7 @@ import { UserService } from './services/user.service';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { TabsModule } from 'ngx-bootstrap/tabs/tabs.module';
+import { MemberDetailResolver } from './resolvers/member-detail.resolver';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs/tabs.module';
     AuthService,
     AlertifyService,
     AuthGuard,
-    UserService
+    UserService,
+    MemberDetailResolver,
+    MemberListResolver
   ],
   bootstrap: [AppComponent]
 })

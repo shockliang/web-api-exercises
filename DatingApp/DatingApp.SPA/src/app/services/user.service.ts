@@ -1,6 +1,6 @@
 import { AuthHttp } from 'angular2-jwt';
 import { Headers, RequestOptions, Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { User } from './../models/User';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
