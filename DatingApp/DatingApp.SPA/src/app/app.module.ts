@@ -1,3 +1,4 @@
+import { MemberEditResolver } from './resolvers/member-edit.resolver';
 import { MemberListResolver } from './resolvers/member-list.resolver';
 import { AuthModule } from './auth/auth.module';
 import { AlertifyService } from './services/alertify.service';
@@ -25,6 +26,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { TabsModule } from 'ngx-bootstrap/tabs/tabs.module';
 import { MemberDetailResolver } from './resolvers/member-detail.resolver';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 
 @NgModule({
@@ -38,7 +40,8 @@ import { NgxGalleryModule } from 'ngx-gallery';
     ListsComponent,
     MessagesComponent,
     MemberCardComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,8 @@ import { NgxGalleryModule } from 'ngx-gallery';
     AuthGuard,
     UserService,
     MemberDetailResolver,
-    MemberListResolver
+    MemberListResolver,
+    MemberEditResolver
   ],
   bootstrap: [AppComponent]
 })
