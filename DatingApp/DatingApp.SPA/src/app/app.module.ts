@@ -1,3 +1,4 @@
+import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
 import { MemberListResolver } from './resolvers/member-list.resolver';
 import { AuthModule } from './auth/auth.module';
@@ -60,7 +61,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
     UserService,
     MemberDetailResolver,
     MemberListResolver,
-    MemberEditResolver
+    MemberEditResolver,
+    PreventUnsavedChangesGuard
   ],
   bootstrap: [AppComponent]
 })
