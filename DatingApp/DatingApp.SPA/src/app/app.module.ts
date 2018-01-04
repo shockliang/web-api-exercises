@@ -28,6 +28,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs/tabs.module';
 import { MemberDetailResolver } from './resolvers/member-detail.resolver';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
     MessagesComponent,
     MemberCardComponent,
     MemberDetailComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
