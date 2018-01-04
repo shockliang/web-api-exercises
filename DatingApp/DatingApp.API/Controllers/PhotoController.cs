@@ -40,25 +40,34 @@ namespace DatingApp.API.Controllers
             cloudinary = new Cloudinary(acc);
         }
 
+        [HttpGet("{id}", Name = "GetPhoto")]
+        public async Task<IActionResult> GetPhoto(int id)
+        {
+            var photoFromRepo = await repo.GetPhoto(id);
+            var photo = mapper.Map<PhotoForReturnDto>(photoFromRepo);
+
+            return Ok(photo);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddPhotoForUser(int userId, PhotoForCreationDto photoDto)
         {
             var user = await repo.GetUser(userId);
-            if(user == null)
+            if (user == null)
                 return BadRequest("Could not find user");
 
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if(currentUserId != userId)
+            if (currentUserId != userId)
                 return Unauthorized();
 
             var file = photoDto.File;
 
             var uploadResult = new ImageUploadResult();
 
-            if(file.Length>0)
+            if (file.Length > 0)
             {
-                using(var stream = file.OpenReadStream())
+                using (var stream = file.OpenReadStream())
                 {
                     var uploadParams = new ImageUploadParams()
                     {
@@ -74,16 +83,18 @@ namespace DatingApp.API.Controllers
 
             var photo = mapper.Map<Photo>(photoDto);
 
-            if(!user.Photos.Any(m => m.IsMain))
+            if (!user.Photos.Any(m => m.IsMain))
             {
                 photo.IsMain = true;
             }
 
             user.Photos.Add(photo);
 
-            if(await repo.SaveAll())
+            var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
+
+            if (await repo.SaveAll())
             {
-                return Ok();
+                return CreatedAtRoute("GetPhoto", new {id = photo.Id}, photoToReturn);
             }
 
             return BadRequest("Could not add the photo");
