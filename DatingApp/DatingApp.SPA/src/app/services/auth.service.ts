@@ -1,3 +1,4 @@
+import { User } from './../models/User';
 import { Http, Headers, RequestOptions, Response } from "@angular/http";
 import { Injectable } from "@angular/core";
 import "rxjs/add/operator/map";
@@ -12,6 +13,7 @@ export class AuthService {
   baseUrl = "http://localhost:5000/api/auth/";
   userToken: any;
   decodedToken: any;
+  currentUser: User;
   jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(private http: Http) { }
@@ -23,8 +25,9 @@ export class AuthService {
         const user = response.json();
         if (user) {
           localStorage.setItem('token', user.tokenString);
+          localStorage.setItem('user', JSON.stringify(user.user));
           this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
-          console.log(this.decodedToken);
+          this.currentUser = user.user;
           this.userToken = user.tokenString;
         }
       }).catch(this.handleError);
