@@ -16,6 +16,7 @@ import { NgForm } from '@angular/forms';
 export class MemberEditComponent implements OnInit {
   user: User;
   @ViewChild('editForm') editFrom: NgForm;
+  photoUrl: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,6 +28,8 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   updateUser() {

@@ -11,6 +11,7 @@ import { RouterLinkActive } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {}
+  photoUrl: string;
 
   get username(): string {
     return this.authService.decodedToken.unique_name;
@@ -22,6 +23,7 @@ export class NavComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   login() {
