@@ -5,6 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 import { AlertifyService } from '../../services/alertify.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-photo-editor',
@@ -16,9 +17,10 @@ export class PhotoEditorComponent implements OnInit {
   uploader: FileUploader;
   hasBaseDropZoneOver: boolean = false;
   baseUrl = environment.apiUrl;
+  currentMain: Photo;
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private userService: UserService,
     private alertify: AlertifyService) { }
 
@@ -42,7 +44,7 @@ export class PhotoEditorComponent implements OnInit {
     });
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
-      if(response) {
+      if (response) {
         const res: Photo = JSON.parse(response);
         const photo = {
           id: res.id,
@@ -58,8 +60,10 @@ export class PhotoEditorComponent implements OnInit {
 
   setMainPhoto(photo: Photo) {
     this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id)
-      .subscribe(()=> {
-        console.log('Successfully set to main');
+      .subscribe(() => {
+        this.currentMain = _.findWhere(this.photos,{isMain: true});
+        this.currentMain.isMain = false;
+        photo.isMain = true;
       }, error => {
         this.alertify.error(error);
       });
