@@ -106,22 +106,56 @@ namespace DatingApp.API.Controllers
                 return Unauthorized();
 
             var photoFromRepo = await repo.GetPhoto(id);
-            if(photoFromRepo == null)
+            if (photoFromRepo == null)
                 return NotFound();
 
-            if(photoFromRepo.IsMain)
+            if (photoFromRepo.IsMain)
                 return BadRequest("This. already the main photo");
 
             var currentMainPhoto = await repo.GetMainPhotoForUser(userId);
-            if(currentMainPhoto != null)
+            if (currentMainPhoto != null)
                 currentMainPhoto.IsMain = false;
 
             photoFromRepo.IsMain = true;
 
-            if(await repo.SaveAll())
+            if (await repo.SaveAll())
                 return NoContent();
 
             return BadRequest("Could not set photo to main");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePhoto(int userId, int id)
+        {
+            if (IsUnauthorized(userId))
+                return Unauthorized();
+
+            var photoFromRepo = await repo.GetPhoto(id);
+            if (photoFromRepo == null)
+                return NotFound();
+
+            if (photoFromRepo.IsMain)
+                return BadRequest("You cannot delete the main photo");
+
+            if (photoFromRepo.PublicId != null)
+            {
+                var deleteParams = new DeletionParams(photoFromRepo.PublicId);
+
+                var result = cloudinary.Destroy(deleteParams);
+
+                if (result.Result == "ok")
+                    repo.Delete(photoFromRepo);
+            }
+
+            if (photoFromRepo.PublicId == null)
+            {
+                repo.Delete(photoFromRepo);
+            }
+            
+            if (await repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Failed to delete the photo");
         }
 
         private bool IsUnauthorized(int userId)
