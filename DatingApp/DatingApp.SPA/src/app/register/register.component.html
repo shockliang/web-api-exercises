@@ -2,37 +2,38 @@
   <h2 class="text-center text-primary">Sign Up</h2>
 
   <hr>
-  <div class="form-group" [ngClass]="{'has-error': registerForm.get('username').errors && registerForm.get('username').touched}">
+  <div class="form-group" [ngClass]="{'has-error': hasAnyError('username')}">
     <input type="text" class="form-control" 
       placeholder="Username" formControlName="username">
-    <span class="help-block" *ngIf="registerForm.get('username').hasError('required') && registerForm.get('username').touched">
+    <span class="help-block" *ngIf="hasRequiredError('username')">
       Username is required.
     </span>
   </div>
 
-  <div class="form-group" [ngClass]="{'has-error': registerForm.get('password').errors && registerForm.get('password').touched}">
-    <input type="password" class="form-control" [ngClass]="{'has-error': registerForm.get('password').errors && registerForm.get('password').touched}" 
-      placeholder="Password" formControlName="password">
-    <span class="help-block" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">
+  <div class="form-group" [ngClass]="{'has-error': hasAnyError('password')}">
+    <input type="password" 
+      class="form-control" 
+      [ngClass]="{'has-error': hasAnyError('password')}" 
+      placeholder="Password" 
+      formControlName="password">
+    <span class="help-block" *ngIf="hasRequiredError('password')">
       Password is required.
     </span>
-    <span class="help-block" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">
+    <span class="help-block" *ngIf="hasMinLengthError('password')">
       Password must be at least 4 characters.
     </span>
-    <span class="help-block" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">
+    <span class="help-block" *ngIf="hasMaxLengthError('password')">
       Password must exceed 8 characters.
     </span>
   </div>
 
-  <div class="form-group" [ngClass]="{'has-error': 
-    registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').touched 
-    || registerForm.get('confirmPassword').touched && registerForm.hasError('mismatch')}">
+  <div class="form-group" [ngClass]="{'has-error': hasAnyError('confirmPassword') || hasMismatchError()}">
     <input type="password" class="form-control" [ngClass]="{'has-error': registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').touched}"
       placeholder="Confirm Password" formControlName="confirmPassword">
-    <span class="help-block" *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').touched">
+    <span class="help-block" *ngIf="hasRequiredError('confirmPassword')">
       Confirm Password is required.
     </span>
-    <span class="help-block" *ngIf="registerForm.get('confirmPassword').touched && registerForm.hasError('mismatch')">
+    <span class="help-block" *ngIf="hasMismatchError()">
       Confirm Password must match password.
     </span>
   </div>
