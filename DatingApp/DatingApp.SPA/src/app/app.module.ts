@@ -4,7 +4,7 @@ import { MemberListResolver } from './resolvers/member-list.resolver';
 import { AuthModule } from './auth/auth.module';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -51,6 +51,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     BrowserModule,
     HttpModule,
     FormsModule,
+    ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     AuthModule,
