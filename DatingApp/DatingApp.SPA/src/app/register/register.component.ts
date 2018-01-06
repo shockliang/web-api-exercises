@@ -28,15 +28,15 @@ export class RegisterComponent implements OnInit {
   }
 
   passwrodMatchValidator(group: FormGroup) {
-    return group.get('password').value === group.get('confirmPassword').value ? null : { 'missmatch': true }
+    return group.get('password').value === group.get('confirmPassword').value ? null : { 'mismatch': true }
   }
 
   register() {
-    this.authService.register(this.model).subscribe(() => {
-      this.alertify.success('Registration successful');
-    }, error => {
-      this.alertify.error(error);
-    });
+    // this.authService.register(this.model).subscribe(() => {
+    //   this.alertify.success('Registration successful');
+    // }, error => {
+    //   this.alertify.error(error);
+    // });
   }
 
   cancel() {
