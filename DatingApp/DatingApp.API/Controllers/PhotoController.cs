@@ -89,10 +89,9 @@ namespace DatingApp.API.Controllers
 
             user.Photos.Add(photo);
 
-            var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
-
             if (await repo.SaveAll())
             {
+                var photoToReturn = mapper.Map<PhotoForReturnDto>(photo);
                 return CreatedAtRoute("GetPhoto", new { id = photo.Id }, photoToReturn);
             }
 
@@ -151,7 +150,7 @@ namespace DatingApp.API.Controllers
             {
                 repo.Delete(photoFromRepo);
             }
-            
+
             if (await repo.SaveAll())
                 return Ok();
 
