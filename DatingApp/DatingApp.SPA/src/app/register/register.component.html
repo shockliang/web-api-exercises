@@ -31,7 +31,7 @@
 
   <!-- date of birth -->
   <div class="form-group" [ngClass]="{'has-error': hasRequiredError('dateOfBirth')}">
-    <input class="form-control" type="date" placeholder="Date of Birth" formControlName="dateOfBirth">
+    <input class="form-control" type="text" bsDatepicker [bsConfig]="bsConfig" placeholder="Date of Birth" formControlName="dateOfBirth">
     <span class="help-block" *ngIf="hasRequiredError('dateOfBirth')">Date of birth is required</span>
   </div>
   
