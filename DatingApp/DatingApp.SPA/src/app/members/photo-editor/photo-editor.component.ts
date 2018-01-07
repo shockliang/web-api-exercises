@@ -55,11 +55,9 @@ export class PhotoEditorComponent implements OnInit {
           isMain: res.isMain
         }
         this.photos.push(photo);
-        if (photo.isMain) {
-          this.authService.changeMemberPhoto(photo.url);
-          this.authService.currentUser.photoUrl = photo.url;
-          localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
-        }
+        
+        if (photo.isMain)
+          this.changePhotoAndSaveToLocalStorage(photo);
       }
     }
   }
@@ -70,9 +68,7 @@ export class PhotoEditorComponent implements OnInit {
         this.currentMain = _.findWhere(this.photos, { isMain: true });
         this.currentMain.isMain = false;
         photo.isMain = true;
-        this.authService.changeMemberPhoto(photo.url);
-        this.authService.currentUser.photoUrl = photo.url;
-        localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+        this.changePhotoAndSaveToLocalStorage(photo);
       }, error => {
         this.alertify.error(error);
       });
@@ -87,6 +83,12 @@ export class PhotoEditorComponent implements OnInit {
         this.alertify.error('Failed to delete photo');
       });
     })
+  }
+
+  private changePhotoAndSaveToLocalStorage(photo: Photo) {
+    this.authService.changeMemberPhoto(photo.url);
+    this.authService.currentUser.photoUrl = photo.url;
+    localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
   }
 
 }
