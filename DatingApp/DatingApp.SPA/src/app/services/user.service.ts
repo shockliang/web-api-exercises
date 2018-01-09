@@ -16,11 +16,17 @@ export class UserService {
 
   constructor(private authHttp: AuthHttp) { }
 
-  getUsers(page?: number, itemsPerPage?: number) {
+  getUsers(page?: number, itemsPerPage?: number, userParams?: any) {
     const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
-    let queryString;
+    let queryString = '?'
     if (page != null && itemsPerPage != null) {
-      queryString = `?pageNumber=${page}&pageSize=${itemsPerPage}`;
+      queryString += `pageNumber=${page}&pageSize=${itemsPerPage}&`;
+    }
+
+    if (userParams != null) {
+      queryString += `minAge=${userParams.minAge}
+        &maxAge=${userParams.maxAge}
+        &gender=${userParams.gender}`;
     }
 
     return this.authHttp
@@ -28,7 +34,7 @@ export class UserService {
       .map((response: Response) => {
         paginatedResult.result = response.json();
 
-        if(response.headers.get('Pagination') != null) {
+        if (response.headers.get('Pagination') != null) {
           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
         }
 

@@ -12,6 +12,9 @@ import { AlertifyService } from '../../services/alertify.service';
 })
 export class MemberListComponent implements OnInit {
   users: User[];
+  user: User = JSON.parse(localStorage.getItem('user'));
+  genderList = [{ value: 'male', display: 'Males' }, { value: 'female', display: 'Femalse' }];
+  userParams: any = {};
   pagination: Pagination;
 
   constructor(
@@ -23,18 +26,28 @@ export class MemberListComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.users = data['users'].result;
       this.pagination = data['users'].pagination;
-      console.log(this.pagination);
-    })
+    });
+
+    this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
+    this.userParams.minAge = 18;
+    this.userParams.maxAge = 99;
   }
 
   loadUsers() {
-    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage)
+    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
       .subscribe((res: PaginatedResult<User[]>) => {
         this.users = res.result;
         this.pagination = res.pagination;
       }, error => {
         this.alertify.error(error);
       });
+  }
+
+  resetFilters() {
+    this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
+    this.userParams.minAge = 18;
+    this.userParams.maxAge = 99;
+    this.loadUsers();
   }
 
   public pageChanged(event: any): void {
