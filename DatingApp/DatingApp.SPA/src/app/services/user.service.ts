@@ -24,9 +24,10 @@ export class UserService {
     }
 
     if (userParams != null) {
-      queryString += `minAge=${userParams.minAge}
-        &maxAge=${userParams.maxAge}
-        &gender=${userParams.gender}`;
+      queryString += `minAge=${userParams.minAge}`;
+      queryString += `&maxAge=${userParams.maxAge}`;
+      queryString += `&gender=${userParams.gender}`;
+      queryString += `&orderBy=${userParams.orderBy}`;
     }
 
     return this.authHttp
