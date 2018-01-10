@@ -1,3 +1,4 @@
+import { ListResolver } from './resolvers/list.resolver';
 import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
 import { MemberListResolver } from './resolvers/member-list.resolver';
@@ -73,7 +74,8 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     MemberDetailResolver,
     MemberListResolver,
     MemberEditResolver,
-    PreventUnsavedChangesGuard
+    PreventUnsavedChangesGuard,
+    ListResolver
   ],
   bootstrap: [AppComponent]
 })
