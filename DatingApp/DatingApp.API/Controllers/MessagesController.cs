@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,41 +25,59 @@ namespace DatingApp.API.Controllers
             this.repo = repo;
         }
 
-        [HttpGet("{id}", Name= "GetMessage")]
+        [HttpGet("{id}", Name = "GetMessage")]
         public async Task<IActionResult> GetMessage(int userId, int id)
         {
-            if(userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var messageFromRepo = await repo.GetMessage(id);
 
-            if(messageFromRepo == null)
+            if (messageFromRepo == null)
                 return NotFound();
 
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMessagesForUser(int userId, MessageParams messageParams)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var messagesFromRepo = await repo.GetMessagesForUser(messageParams);
+
+            var messages = mapper.Map<IEnumerable<MessageToReturnDto>>(messagesFromRepo);
+
+            Response.AddPagination(messagesFromRepo.CurrentPage,
+                                    messagesFromRepo.PageSize,
+                                    messagesFromRepo.TotalCount,
+                                    messagesFromRepo.TotalPages);
+
+            return Ok(messages);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int userId, [FromBody] MessageForCreationDto messageForCreationDto)
         {
-            if(userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             messageForCreationDto.SenderId = userId;
 
             var recipient = await repo.GetUser(messageForCreationDto.RecipientId);
 
-            if(recipient == null)
+            if (recipient == null)
                 return BadRequest("Could not find user");
-            
+
             var message = mapper.Map<Message>(messageForCreationDto);
 
             repo.Add(message);
 
             var messageToReturn = mapper.Map<MessageForCreationDto>(message);
 
-            if(await repo.SaveAll())
-                return CreatedAtRoute("GetMessage", new {id = message.Id}, message);
+            if (await repo.SaveAll())
+                return CreatedAtRoute("GetMessage", new { id = message.Id }, message);
 
             throw new Exception("Creating the message failed on save");
         }
