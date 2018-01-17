@@ -119,6 +119,11 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  markAsRead(userId: number, messageId: number) {
+    return this.authHttp.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId + '/read', {})
+      .subscribe();
+  }
+
   private handleError(error: any) {
     if (error.status === 400) {
       return Observable.throw(error._body);

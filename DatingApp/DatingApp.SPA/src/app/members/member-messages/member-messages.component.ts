@@ -3,6 +3,8 @@ import { UserService } from './../../services/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Message } from '../../models/message';
 import { AuthService } from '../../services/auth.service';
+import 'rxjs/add/operator/do';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-member-messages',
@@ -25,7 +27,15 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   laodMessages() {
+    const currentUserId = +this.authService.decodedToken.nameid;
     this.userService.getMessageThreaad(this.authService.decodedToken.nameid, this.userId)
+      .do(messages => {
+        _.each(messages, (message: Message) => {
+          if(message.isRead === false && message.recipientId === currentUserId) {
+            this.userService.markAsRead(currentUserId, message.id);
+          }
+        });
+      })
       .subscribe(messages => {
         this.messages = messages;
       }, error => {
