@@ -2,7 +2,6 @@ import { ListResolver } from './resolvers/list.resolver';
 import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
 import { MemberListResolver } from './resolvers/member-list.resolver';
-import { AuthModule } from './auth/auth.module';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,7 +60,6 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
-    AuthModule,
     TabsModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
