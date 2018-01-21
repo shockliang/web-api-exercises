@@ -105,7 +105,7 @@ namespace DatingApp.API.Controllers
             repo.Add<Like>(like);
 
             if(await repo.SaveAll())
-                return Ok();
+                return Ok(new {});
 
             return BadRequest("Failed to add user");
         }

@@ -35,6 +35,7 @@ import { MessagesResolver } from './resolvers/message.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
+import { ErrorInterceptorProvider } from './services/error.interceptor.service';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { HttpClientModule } from '@angular/common/http';
     MemberEditResolver,
     PreventUnsavedChangesGuard,
     ListResolver,
-    MessagesResolver
+    MessagesResolver,
+    ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })
