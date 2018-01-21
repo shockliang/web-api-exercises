@@ -1,5 +1,5 @@
 import { Message } from './../models/message';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { User } from './../models/User';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
