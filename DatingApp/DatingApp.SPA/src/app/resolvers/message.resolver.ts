@@ -1,6 +1,6 @@
 import { AuthService } from './../services/auth.service';
 import { Message } from './../models/message';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/observable';
 import { AlertifyService } from './../services/alertify.service';
 import { UserService } from './../services/user.service';
 import { Injectable } from '@angular/core';
@@ -23,8 +23,8 @@ export class MessagesResolver implements Resolve<Message[]> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<Message[]> {
     return this.userService.getMessages(
-      this.authService.decodedToken.nameid, 
-      this.pageNumber, 
+      this.authService.decodedToken.nameid,
+      this.pageNumber,
       this.pageSize,
       this.messageContainer)
       .catch(error => {

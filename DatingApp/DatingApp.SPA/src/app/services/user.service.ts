@@ -1,11 +1,11 @@
 import { Message } from './../models/message';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/observable';
 import { User } from './../models/User';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/observable/throw";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { PaginatedResult } from '../models/pagination';
 import { HttpClient, HttpParams } from '@angular/common/http';
 

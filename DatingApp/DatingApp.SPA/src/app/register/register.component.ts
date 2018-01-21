@@ -15,7 +15,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   user: User;
-  registerForm: FormGroup
+  registerForm: FormGroup;
   bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(
@@ -45,11 +45,11 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(4),
         Validators.maxLength(8)]],
       confirmPassword: ['', Validators.required]
-    }, { validator: this.passwrodMatchValidator })
+    }, { validator: this.passwrodMatchValidator });
   }
 
   passwrodMatchValidator(group: FormGroup) {
-    return group.get('password').value === group.get('confirmPassword').value ? null : { 'mismatch': true }
+    return group.get('password').value === group.get('confirmPassword').value ? null : { 'mismatch': true };
   }
 
   hasAnyError(formControl: string): boolean {
@@ -69,11 +69,11 @@ export class RegisterComponent implements OnInit {
   }
 
   hasMismatchError(): boolean {
-    return this.registerForm.get('confirmPassword').touched && this.registerForm.hasError('mismatch')
+    return this.registerForm.get('confirmPassword').touched && this.registerForm.hasError('mismatch');
   }
 
   hasSpecifyError(formControl: string, specifyErrorType: string) {
-    return this.registerForm.get(formControl).hasError(specifyErrorType) && this.registerForm.get(formControl).touched
+    return this.registerForm.get(formControl).hasError(specifyErrorType) && this.registerForm.get(formControl).touched;
   }
 
   register() {
@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit {
       }, () => {
         this.authService.login(this.user).subscribe(() => {
           this.router.navigate(['/members']);
-        })
+        });
       });
     }
   }

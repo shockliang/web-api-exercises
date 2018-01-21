@@ -30,12 +30,21 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
-import { TimeAgoPipe } from 'time-ago-pipe';
 import { MessagesResolver } from './resolvers/message.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptorProvider } from './services/error.interceptor.service';
+import { TimeAgoPipe } from './pipes/time-ago-pipe';
+
+export function getAccessToken(): string {
+  return localStorage.getItem('token');
+}
+
+export const jwtConfig = {
+  tokenGetter: getAccessToken,
+  whitelistedDomains: ['localhost:5000']
+};
 
 @NgModule({
   declarations: [
@@ -69,12 +78,7 @@ import { ErrorInterceptorProvider } from './services/error.interceptor.service';
     ButtonsModule.forRoot(),
     HttpClientModule,
     JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('token');
-        },
-        whitelistedDomains: ['localhost:5000']
-      }
+      config: jwtConfig
     })
   ],
   providers: [

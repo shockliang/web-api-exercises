@@ -31,7 +31,7 @@ export class MemberMessagesComponent implements OnInit {
     this.userService.getMessageThreaad(this.authService.decodedToken.nameid, this.userId)
       .do(messages => {
         _.each(messages, (message: Message) => {
-          if(message.isRead === false && message.recipientId === currentUserId) {
+          if (message.isRead === false && message.recipientId === currentUserId) {
             this.userService.markAsRead(currentUserId, message.id);
           }
         });

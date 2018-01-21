@@ -1,17 +1,18 @@
 import { AuthUser } from './../models/authuser';
 import { User } from './../models/User';
-import { Injectable } from "@angular/core";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import "rxjs/add/observable/throw";
+import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/observable';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
-  baseUrl = "http://localhost:5000/api/auth/";
+  baseUrl = environment.apiUrl;
   userToken: any;
   decodedToken: any;
   currentUser: User;
@@ -26,7 +27,7 @@ export class AuthService {
 
   login(model: any) {
     return this.http
-      .post<AuthUser>(this.baseUrl + "login", model, {
+      .post<AuthUser>(this.baseUrl + 'auth/login', model, {
         headers: new HttpHeaders()
           .set('Content-Type', 'application/json')
       })
@@ -49,7 +50,7 @@ export class AuthService {
 
   register(user: User) {
     return this.http
-      .post(this.baseUrl + 'register', user, {
+      .post(this.baseUrl + 'auth/register', user, {
         headers: new HttpHeaders()
           .set('Content-Type', 'application/json')
       });

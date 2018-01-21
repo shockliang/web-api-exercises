@@ -15,7 +15,7 @@ import * as _ from 'underscore';
 export class PhotoEditorComponent implements OnInit {
   @Input() photos: Photo[];
   uploader: FileUploader;
-  hasBaseDropZoneOver: boolean = false;
+  hasBaseDropZoneOver = false;
   baseUrl = environment.apiUrl;
   currentMain: Photo;
   @Output() getMemberPhotoChange = new EventEmitter<string>();
@@ -53,13 +53,14 @@ export class PhotoEditorComponent implements OnInit {
           dateAdded: res.dateAdded,
           description: res.description,
           isMain: res.isMain
-        }
+        };
         this.photos.push(photo);
-        
-        if (photo.isMain)
+
+        if (photo.isMain) {
           this.changePhotoAndSaveToLocalStorage(photo);
+        }
       }
-    }
+    };
   }
 
   setMainPhoto(photo: Photo) {
@@ -82,7 +83,7 @@ export class PhotoEditorComponent implements OnInit {
       }, error => {
         this.alertify.error('Failed to delete photo');
       });
-    })
+    });
   }
 
   private changePhotoAndSaveToLocalStorage(photo: Photo) {
